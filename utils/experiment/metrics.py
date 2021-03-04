@@ -1,8 +1,17 @@
+# -*- encoding: utf-8 -*-
+'''
+@Func    :   evaluation of retrieved results
+@Time    :   2021/03/04 17:35:21
+@Author  :   Yixiao Ma 
+@Contact :   mayx20@mails.tsinghua.edu.cn
+'''
+
 import os
 import numpy as np
 import json
 import math
 import functools
+import argparse
 from sklearn.metrics import ndcg_score
 from tqdm import tqdm
 
@@ -35,7 +44,7 @@ def fleiss_kappa(testData, N, k, n): #testData表示要计算的数据，（N,k�
     P0 = 1.0*P0/N
     ysum = np.sum(dataMat, axis=0)
     for i in range(k):
-        ysum[0, i] = (1/k)**2#(ysum[0, i]/sum)**2
+        ysum[0, i] = (ysum[0, i]/sum)**2 # (1/k)**2
     Pe = ysum*oneMat*0.0
     ans = (P0-Pe)/(1-Pe)
     return ans[0, 0]
@@ -58,50 +67,57 @@ def ndcg(ranks,K):
 
     return dcg_value/idcg_value
 
-if __name__ == "__main__":
-    with open('/work/mayixiao/similar_case/LeCaRD/label/label.json', 'r') as f:
+def load_file(args):
+    with open(args.label, 'r') as f:
         lists = json.load(f)
     avglist = lists[3]
-    with open('/work/mayixiao/similar_case/LeCaRD/label/bert.json', 'r') as f:
+
+    with open(os.path.join(args.pred, 'bert.json'), 'r') as f:
         blines = f.readlines()
     bertdics = [eval(blines[0]),eval(blines[1]),eval(blines[2]),eval(blines[3])]
-    with open('/work/mayixiao/similar_case/combined_top100.json','r') as f:
+
+    with open(os.path.join(args.pred, 'combined_top100.json'), 'r') as f:
         combdic = json.load(f)
-    with open('/work/mayixiao/similar_case/tfidf_top100.json','r') as f:
+    
+    with open(os.path.join(args.pred, 'tfidf_top100.json'), 'r') as f:
         tdic = json.load(f)
-    with open('/work/mayixiao/similar_case/lm_top100.json','r') as f:
+    
+    with open(os.path.join(args.pred, 'lm_top100.json'), 'r') as f:
         ldic = json.load(f)
-    with open('/work/mayixiao/similar_case/bm25_top100.json','r') as f:
+    
+    with open(os.path.join(args.pred, 'bm25_top100.json'), 'r') as f:
         bdic = json.load(f)
 
     for key in list(combdic.keys())[:100]:
         tdic[key].reverse()
         bdic[key].reverse()
-    MODE = 'MAP'
-    keys = list(combdic.keys())[:77]
-    # keys = [i for i in list(combdic.keys())[:100] if list(combdic.keys())[:100].index(i) % 5 == 0]
-    dics = [bdic, tdic, ldic]
-    # dics = [eval(blines[0]),eval(blines[1]),eval(blines[2]),eval(blines[3])]
     
-    if MODE == 'KAPPA':
-        dataArr = []
-        for i in range(100):
-            rel = 0
-            for j in range(30):
-                # temcount = [0,0,0,0] # number of label 1,2,3,4
-                tem = 0
-                for k in range(3):
-                    # temcount[int(lists[k][i][j])-1] += 1
-                    tem += lists[k][i][j]
-                if tem <= 4:
-                    rel += 1
-                # dataArr.append(temcount)
-            dataArr.append(rel)
-        # print(dataArr)
-        # print(sum(dataArr)/len(dataArr))
-        print(len([i for i in dataArr if i==0 and i < 5]))
-        # print(fleiss_kappa(dataArr, 3000, 4, 3))
-    elif MODE == 'NDCG':
+    return avglist, bertdics, combdic, tdic, ldic, bdic
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Help info.")
+    parser.add_argument('--m', type=str, choices= ['NDCG', 'P', 'MAP'], default='NDCG', help='Label file path.')
+    parser.add_argument('--label', type=str, default='../../data/label/label.json', help='Label file path.')
+    parser.add_argument('--pred', type=str, default='../../data/prediction', help='Dir path for model predictions.')
+    parser.add_argument('--q', type=str, choices= ['all', 'common', 'controversial', 'test'], default='all', help='query set')
+
+    args = parser.parse_args()
+
+    avglist, bertdics, combdic, tdic, ldic, bdic = load_file(args)
+
+    dics = [bdic, tdic, ldic]
+    if args.q == 'all':
+        keys = list(combdic.keys())[:100]    
+    elif args.q == 'common':
+        keys = list(combdic.keys())[:77]  
+    elif args.q == 'controversial':
+        keys = list(combdic.keys())[77:100]
+    elif args.q == 'test':
+        keys = [i for i in list(combdic.keys())[:100] if list(combdic.keys())[:100].index(i) % 5 == 0]
+        dics = [bdic, tdic, ldic, eval(blines[1])]
+        # dics = [eval(blines[0]),eval(blines[1]),eval(blines[2]),eval(blines[3])]
+    
+    if args.m == 'NDCG':
         topK_list = [10, 20, 30]
 
         ndcg_list = []
@@ -119,7 +135,7 @@ if __name__ == "__main__":
             ndcg_list.append(temK_list)
         print(ndcg_list)
 
-    elif MODE == 'P': # P and MAP
+    elif args.m == 'P': 
         topK_list = [5,10]
         sp_list = []
 
@@ -134,7 +150,7 @@ if __name__ == "__main__":
             sp_list.append(temK_list)
         print(sp_list)
 
-    elif MODE == 'MAP':
+    elif args.m == 'MAP':
         map_list = []
         for rdic in dics:
             smap = 0.0
@@ -149,6 +165,20 @@ if __name__ == "__main__":
             map_list.append(smap/len(keys))
         print(map_list)
     
+    # if MODE == 'KAPPA':
+    #     dataArr = []
+    #     for i in range(100):
+    #         rel = 0
+    #         for j in range(30):
+    #             tem = 0
+    #             for k in range(3):
+    #                 tem += lists[k][i][j]
+    #             if tem <= 4:
+    #                 rel += 1
+    #         dataArr.append(rel)
+    #     # print(len([i for i in dataArr if i==0 and i < 5]))
+    #     print(fleiss_kappa(dataArr, 3000, 4, 3))
+
     # elif MODE == 'F1':
     #     topK = 15
     #     rdic_list = [tdic, ldic, bdic]
