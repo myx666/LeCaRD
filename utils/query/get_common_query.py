@@ -1,21 +1,31 @@
+# -*- encoding: utf-8 -*-
+'''
+@Func    :   get common queries from ridx
+@Time    :   2021/03/05 11:02:03
+@Author  :   Yixiao Ma 
+@Contact :   mayx20@mails.tsinghua.edu.cn
+'''
+
 import os
 import re
 import json
+import argparse
 from tqdm import tqdm
 
-ROOT = '/work/yangjun/LAW/preprocess_new_data/feature_data'
-CRIME_ROOT = '/work/mayixiao/similar_case/crimepath.json'
-LABELPATH = '/work/mayixiao/similar_case/chargelabel.json'
-FACT_PATH = '/work/mayixiao/similar_case/fact_content.json'
-WRITEPATH = '/work/mayixiao/similar_case/普通query+fx.json'
+parser = argparse.ArgumentParser(description="Help info.")
+parser.add_argument('--c', type=str, default='data/corpus', help='Corpus dir path.')
+parser.add_argument('--fact', type=str, default='data/others/fact_content.json', help='Fact content path.')
+parser.add_argument('--w', type=str, default='data/query/common_query.json', help='Write path.')
 
-with open (CRIME_ROOT,'r') as f:
+args = parser.parse_args()
+
+with open (os.path.join(args.c, 'document_path.json'),'r') as f:
     jsfile = json.load(f)
 
-with open (LABELPATH,'r') as g:
+with open (os.path.join(args.c, 'common_charge.json'),'r') as g:
     labels = json.load(g)
 
-with open (FACT_PATH,'r') as h:
+with open (args.fact, 'r') as h:
     # facts = json.load(h)
     facts = h.readlines()
 
@@ -73,7 +83,7 @@ for ridx in tqdm(ridxs[:]):
                 pass
                 # print(os.path.join(ROOT,path))
 
-with open(WRITEPATH, 'w') as f:
+with open(args.w, 'w') as f:
     for i in wjson:
         json.dump(i, f, ensure_ascii=False)
         # f.write('\n')

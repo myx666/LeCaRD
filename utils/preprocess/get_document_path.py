@@ -1,21 +1,32 @@
+# -*- encoding: utf-8 -*-
+'''
+@Func    :   get criminal document paths from raw corpus
+@Time    :   2021/03/05 15:00:39
+@Author  :   Yixiao Ma 
+@Contact :   mayx20@mails.tsinghua.edu.cn
+'''
+
 import os
 import re
 import numpy as np
 import json
+import argparse
 from tqdm import tqdm
 
-WRITEPATH = '/work/mayixiao/similar_case/crimepath.json'
-CASE_ROOT = '/work/yangjun/LAW/preprocess_new_data/feature_data'
+parser = argparse.ArgumentParser(description="Help info.")
+parser.add_argument('--d', type=str, default='data/corpus/documents', help='Document dir path.')
+parser.add_argument('--w', type=str, default='data/corpus/document_path.json', help='Write path.')
+
+args = parser.parse_args()
+
 iscriminal = re.compile(r'.*罪.*')
 isverdict = re.compile(r'.*刑事判决书.*')
-raw_dirs = os.listdir(CASE_ROOT)
-dirs = [dir_ for dir_ in raw_dirs if os.path.isdir(os.path.join(CASE_ROOT, dir_))]
+raw_dirs = os.listdir(args.d)
+dirs = [dir_ for dir_ in raw_dirs if os.path.isdir(os.path.join(args.d, dir_))]
 jspaths = {'single':[],'retrial':[]} #刑事案件判决书的路径、有再审判决书的路径
 
-# print(len(dirs), dirs[:10])
-
 for dir in tqdm(dirs[:]):
-    dirpath = os.path.join(CASE_ROOT, dir)
+    dirpath = os.path.join(args.d, dir)
     if os.path.isdir(dirpath):
         files = [_file for _file in os.listdir(dirpath) if os.path.isdir(dirpath) and os.path.isfile(os.path.join(dirpath, _file))]
     tem_retrival = []
@@ -34,20 +45,14 @@ for dir in tqdm(dirs[:]):
                 if isverdict.match(jsfile['writName']):
                     tem_retrival.append(os.path.join(dir,file_))
             # elif 'ajName' in jsfile and iscriminal.match(jsfile['ajName']):
-                # print('no writName: ', os.path.join(CASE_ROOT,dir,file_))
+                # print('no writName: ', os.path.join(args.d, dir, file_))
 
     if len(tem_retrival) == 1:
         jspaths['single'].append(tem_retrival[0])
     elif len(tem_retrival) > 1:
         jspaths['retrial'].append(tem_retrival)
 
-# print(jspaths)
-with open(WRITEPATH,'w') as g:
+with open(args.w, 'w') as g:
     json.dump(jspaths, g, ensure_ascii=False)
 
 print(len(jspaths['single']), len(jspaths['retrial']))
-# if __name__ == "__main__":
-#     a = {'a':1,'b':2}
-#     print('a' in a)
-    # iscriminal = re.compile(r'.*罪.*')
-    # print(iscriminal.match('爆炸物罪一案').group())

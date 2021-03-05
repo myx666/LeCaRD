@@ -1,37 +1,30 @@
+# -*- encoding: utf-8 -*-
+'''
+@Func    :   get query file: common query + controversial query
+@Time    :   2021/03/05 11:17:20
+@Author  :   Yixiao Ma 
+@Contact :   mayx20@mails.tsinghua.edu.cn
+'''
+
 import os
 import re
 import numpy as np
 import json
+import argparse
 from tqdm import tqdm
-# import thulac
-import jieba
 
-ROOT = '/work/yangjun/LAW/preprocess_new_data/feature_data'
-CRIME_ROOT = '/work/mayixiao/similar_case/crimepath.json'
-Q_PATH = '/work/mayixiao/similar_case/普通query+fx.json'
-W_PATH = '/work/mayixiao/similar_case/tolabel.json'
-C_PATH = '/work/mayixiao/similar_case/combined_top100.json'
+parser = argparse.ArgumentParser(description="Help info.")
+parser.add_argument('--q', type=str, default='data/query', help='Query dir path.')
+parser.add_argument('--w', type=str, default='data/query/query.json', help='Write path.')
 
-# with open(CRIME_ROOT, 'r') as f:
-#     jspath = json.load(f)
-
-# paths = []
-
-# for path in tqdm(jspath['single'][:]):
-#     paths.append(path)
-
-# for path0 in tqdm(jspath['retrial'][:]):
-#     for path in path0:
-#         paths.append(path)
+args = parser.parse_args()
 
 jswrite = []
 
-with open(Q_PATH, 'r') as f:
+with open(os.path.join(args.q, 'common_query.json'), 'r') as f:
     lines = f.readlines()
 
-
-
-with open('/work/mayixiao/similar_case/改判query.json', 'r') as f:
+with open(os.path.join(args.q, 'controversial_query.json'), 'r') as f:
     jsfile = json.load(f)
 
 for line in lines:
@@ -42,7 +35,6 @@ for line in lines:
     tem['q'] = dic['jbqk']
     tem['crime'] = dic['crime']
     jswrite.append(tem)
-
 
 lists = jsfile.values()
 count = 0
@@ -58,7 +50,7 @@ for list_ in lists:
 
 print(len(jswrite))
 
-with open(W_PATH, 'w') as f:
+with open(args.w, 'w') as f:
     for line in jswrite:
         json.dump(line,f, ensure_ascii=False)
         f.write('\n')
