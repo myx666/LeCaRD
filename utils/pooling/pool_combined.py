@@ -54,7 +54,8 @@ for key in a.keys():
     for i in d[1:]:
         if (i in a[key][1:] or i in b[key][:-1]) and i not in tem:
             tem.append(i)
-    tem = tem[:67]
+    # tem = tem[:67]
+    tem = tem[:30]
     while len(tem) < 100:
         new = random.randint(0,43823)
         while new in tem:
