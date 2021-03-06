@@ -1,23 +1,34 @@
+# -*- encoding: utf-8 -*-
+'''
+@Func    :   get word-level corpus
+@Time    :   2021/03/05 16:47:38
+@Author  :   Yixiao Ma 
+@Contact :   mayx20@mails.tsinghua.edu.cn
+'''
+
 import os
 import re
 import numpy as np
 import json
+import argparse
 from tqdm import tqdm
 # import thulac
 import jieba
 
-ROOT = '/work/yangjun/LAW/preprocess_new_data/feature_data'
-CRIME_ROOT = '/work/mayixiao/similar_case/crimepath.json'
-Q_PATH = '/work/mayixiao/similar_case/普通query+fx.json'
-STOP_PATH = '/work/mayixiao/similar_case/stopword.txt'
-WRITEPATH = '/work/mayixiao/similar_case/corpus_jieba.json'
+parser = argparse.ArgumentParser(description="Help info.")
+parser.add_argument('--d', type=str, default='data/corpus/documents', help='Document dir path.')
+parser.add_argument('--dpath', type=str, default='data/corpus/document_path.json', help='Document_path file path.')
+parser.add_argument('--s', type=str, default='data/others/stopword.txt', help='Stopword path.')
+parser.add_argument('--w', type=str, default='data/others/corpus_jieba.json', help='Write path.')
+
+args = parser.parse_args()
 
 # seg = thulac.thulac(seg_only=True, filt=True)
 
-with open(CRIME_ROOT, 'r') as f:
+with open(args.dpath, 'r') as f:
     jspath = json.load(f)
 
-with open(STOP_PATH, 'r') as g:
+with open(args.s, 'r') as g:
     lines = g.readlines()
 stopwords = [i.strip() for i in lines]
 stopwords.extend(['.','（','）','-'])
@@ -25,7 +36,7 @@ stopwords.extend(['.','（','）','-'])
 corpus = []
 
 for path in tqdm(jspath['single'][:]):
-    fullpath = os.path.join(ROOT, path)
+    fullpath = os.path.join(args.d, path)
     with open(fullpath, 'r') as g:
         file_ = json.load(g)
     # if 'ajjbqk' in file_:
@@ -36,7 +47,7 @@ for path in tqdm(jspath['single'][:]):
 
 for path0 in tqdm(jspath['retrial'][:]):
     for path in path0:
-        fullpath = os.path.join(ROOT, path)
+        fullpath = os.path.join(args.d, path)
         with open(fullpath, 'r') as g:
             file_ = json.load(g)
         # if 'ajjbqk' in file_:
@@ -46,6 +57,6 @@ for path0 in tqdm(jspath['retrial'][:]):
         corpus.append([i for i in tem if not i in stopwords])
 
 print(len(corpus))
-with open(WRITEPATH, 'w') as f:
+with open(args.w, 'w') as f:
     json.dump(corpus, f, ensure_ascii=False)
 

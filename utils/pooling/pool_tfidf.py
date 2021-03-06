@@ -1,25 +1,35 @@
+# -*- encoding: utf-8 -*-
+'''
+@Func    :   get candidate pools by tf-idf
+@Time    :   2021/03/05 17:13:42
+@Author  :   Yixiao Ma 
+@Contact :   mayx20@mails.tsinghua.edu.cn
+'''
+
 import jieba
 import os
 import re
 import numpy as np
 import json
+import argparse
 from tqdm import tqdm
 from gensim import corpora,models,similarities
 
-ROOT = '/work/yangjun/LAW/preprocess_new_data/feature_data'
-CRIME_ROOT = '/work/mayixiao/similar_case/crimepath.json'
-Q_PATH = '/work/mayixiao/similar_case/tolabel.json'
-STOP_PATH = '/work/mayixiao/similar_case/stopword.txt'
-CORPUS_PATH = '/work/mayixiao/similar_case/corpus_jieba.json'
-WRITE_PATH = '/work/mayixiao/similar_case/tfidf_top100.json'
+parser = argparse.ArgumentParser(description="Help info.")
+parser.add_argument('--s', type=str, default='data/others/stopword.txt', help='Stopword path.')
+parser.add_argument('--q', type=str, default='data/query/query.json', help='Query path.')
+parser.add_argument('--split', type=str, default='data/others/corpus_jieba.json', help='Split corpus path.')
+parser.add_argument('--w', type=str, default='data/prediction/tfidf_top100.json', help='Write path.')
 
-with open(Q_PATH,'r') as f:
+args = parser.parse_args()
+
+with open(args.q, 'r') as f:
     lines = f.readlines()
 
-with open(CORPUS_PATH,'r') as f:
+with open(args.split, 'r') as f:
     raw_corpus = json.load(f)
 
-with open(STOP_PATH, 'r') as g:
+with open(args.s, 'r') as g:
     words = g.readlines()
 stopwords = [i.strip() for i in words]
 stopwords.extend(['.','（','）','-'])
@@ -46,5 +56,5 @@ for line in tqdm(lines[:]):
     rankdic[eval(line)['ridx']] = np.array(sim).argsort()[-101:].tolist()
     # print(sim[:5])
     # print(np.array(bm25Model.get_scores(q)).argsort()[-5:].tolist())
-with open(WRITE_PATH, 'w') as f:
+with open(args.w, 'w') as f:
     json.dump(rankdic, f, ensure_ascii=False)
