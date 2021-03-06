@@ -97,8 +97,8 @@ def load_file(args):
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Help info.")
     parser.add_argument('--m', type=str, choices= ['NDCG', 'P', 'MAP'], default='NDCG', help='Label file path.')
-    parser.add_argument('--label', type=str, default='../../data/label/label.json', help='Label file path.')
-    parser.add_argument('--pred', type=str, default='../../data/prediction', help='Dir path for model predictions.')
+    parser.add_argument('--label', type=str, default='data/label/label_top30.json', help='Label file path.')
+    parser.add_argument('--pred', type=str, default='data/prediction', help='Dir path for model predictions.')
     parser.add_argument('--q', type=str, choices= ['all', 'common', 'controversial', 'test'], default='all', help='query set')
 
     args = parser.parse_args()
@@ -126,7 +126,7 @@ if __name__ == "__main__":
             for redic in dics:
                 sndcg = 0.0
                 for key in keys:
-                    rawranks = [4 - avglist[list(combdic.keys()).index(key)][list(combdic[key][:30]).index(i)] for i in redic[key] if i in list(combdic[key][:30])]
+                    rawranks = [4 - avglist[key][list(combdic[key][:30]).index(i)] for i in redic[key] if i in list(combdic[key][:30])]
                     # print(rawranks) 
                     ranks = rawranks + [0]*(30-len(rawranks))
                     if sum(ranks) != 0:
@@ -145,7 +145,7 @@ if __name__ == "__main__":
                 sp = 0.0
                 for key in keys:
                     ranks = [i for i in rdic[key] if i in list(combdic[key][:30])] 
-                    sp += float(len([j for j in ranks[:topK] if avglist[list(combdic.keys()).index(key)][list(combdic[key][:30]).index(j)] == 1])/topK)
+                    sp += float(len([j for j in ranks[:topK] if avglist[key][list(combdic[key][:30]).index(j)] == 1])/topK)
                 temK_list.append(sp/len(keys))
             sp_list.append(temK_list)
         print(sp_list)
@@ -156,10 +156,10 @@ if __name__ == "__main__":
             smap = 0.0
             for key in keys:
                 ranks = [i for i in rdic[key] if i in list(combdic[key][:30])] 
-                rels = [ranks.index(i) for i in ranks if avglist[list(combdic.keys()).index(key)][list(combdic[key][:30]).index(i)] == 1]
+                rels = [ranks.index(i) for i in ranks if avglist[key][list(combdic[key][:30]).index(i)] == 1]
                 tem_map = 0.0
                 for rel_rank in rels:
-                    tem_map += float(len([j for j in ranks[:rel_rank+1] if avglist[list(combdic.keys()).index(key)][list(combdic[key][:30]).index(j)] == 1])/(rel_rank+1))
+                    tem_map += float(len([j for j in ranks[:rel_rank+1] if avglist[key][list(combdic[key][:30]).index(j)] == 1])/(rel_rank+1))
                 if len(rels) > 0:
                     smap += tem_map / len(rels)
             map_list.append(smap/len(keys))
