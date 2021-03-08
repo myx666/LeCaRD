@@ -10,7 +10,7 @@
 
 ## Background
 
-The **Le**gal **Ca**se **R**etrieval **D**ataset (**LeCaRD**) contains 106 query cases and over 43,000 candidate cases. Queries and results are adopted from criminal cases published by the Supreme People’s Court of China. Relevance judgments criteria and annotation are all conducted by our legal expert team. For dataset evaluation, we implemented several existing retrieval models on LeCaRD as baselines. 
+The **Le**gal **Ca**se **R**etrieval **D**ataset (**LeCaRD**) contains 106 query cases and over 43,000 candidate cases. Queries and results are adopted from criminal cases published by [the Supreme People’s Court of China](https://wenshu.court.gov.cn/). Relevance judgments criteria and annotation are all conducted by our legal expert team. For dataset evaluation, we implemented several existing retrieval models on LeCaRD as baselines. 
 
 ## Project Structure
 
