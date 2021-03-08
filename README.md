@@ -11,7 +11,7 @@
 
 ## Background
 
-The **Le**gal **Ca**se **R**etrieval **D**ataset (**LeCaRD**) contains 106 query cases and over 43,000 candidate cases. Queries and results are adopted from criminal cases published by [the Supreme People’s Court of China](https://wenshu.court.gov.cn/). Relevance judgments criteria and annotation are all conducted by our legal expert team. For dataset evaluation, we implemented several existing retrieval models on LeCaRD as baselines. 
+The **Le**gal **Ca**se **R**etrieval **D**ataset (**LeCaRD**) contains 107 query cases and 10,700 candidate cases. Queries and results are adopted from criminal cases published by [the Supreme People’s Court of China](https://wenshu.court.gov.cn/). Relevance judgments criteria and annotation are all conducted by our legal expert team. For dataset evaluation, we implemented several existing retrieval models on LeCaRD as baselines. 
 
 ## Project Structure
 
@@ -31,7 +31,7 @@ data
 ├── others
 │   ├── criminal charges.txt		// list of all Chinese criminal charges
 │   └── stopword.txt
-├── prediction	// candidate pooling results using different methods
+├── prediction				// candidate pooling results using different methods
 │   ├── bert.json
 │   ├── bm25_top100.json
 │   ├── combined_top100.json		// overall candidate list
@@ -43,7 +43,6 @@ data
     └── query.json			// [important] overall query file
 
 6 directories, 16 files
-
 ```
 
 ## Install
@@ -60,7 +59,7 @@ $ unzip data/candidates/candidates.zip -d data/candidates
 
 ## Usage
 
-For a quick start, you only need to get familiar with three files (also marked as [important] in [Project Structure](projectstructure)): `query.json`, `candidates`, and `golden_labels.json
+For a quick start, you only need to get familiar with three files (also marked as [important] in [Project Structure](project-structure)): `query.json`, `candidates`, and `golden_labels.json
 `. 
 
 ### query.json
