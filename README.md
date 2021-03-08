@@ -59,3 +59,7 @@ $ unzip data/candidates/candidates.zip -d data/candidates
 
 ## Usage
 
+## License
+
+[MIT](LICENSE) © Yixiao Ma
+
