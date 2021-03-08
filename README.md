@@ -1,17 +1,9 @@
-# LeCaRD: A Chinese Legal Case Retrieval Dataset
+.
+├── data
+├── LICENSE
+├── metrics.py
+├── readme.md
+├── README.md
+└── utils
 
-
-## Overview
-* [Background](#background)
-
-- [Install](#install)
-
-- [Usage](#usage)
-
-
-## Background
-
-## Install
-
-## Usage
-
+2 directories, 4 files
