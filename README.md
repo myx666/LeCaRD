@@ -59,7 +59,7 @@ $ unzip data/candidates/candidates.zip -d data/candidates
 
 ## Usage
 
-For a quick start, you only need to get familiar with three files (also marked as [important] in [Project Structure](project-structure)): `query.json`, `candidates`, and `golden_labels.json
+For a quick start, you only need to get familiar with three files (also marked as [important] in [Project Structure](#project-structure)): `query.json`, `candidates`, and `golden_labels.json
 `. 
 
 ### query.json
