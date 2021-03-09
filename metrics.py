@@ -95,10 +95,10 @@ def load_file(args):
     return avglist, bertdics, combdic, tdic, ldic, bdic
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Help info.")
-    parser.add_argument('--m', type=str, choices= ['NDCG', 'P', 'MAP'], default='NDCG', help='Label file path.')
+    parser = argparse.ArgumentParser(description="Help info:")
+    parser.add_argument('--m', type=str, choices= ['NDCG', 'P', 'MAP'], default='NDCG', help='Metric.')
     parser.add_argument('--label', type=str, default='data/label/label_top30.json', help='Label file path.')
-    parser.add_argument('--pred', type=str, default='data/prediction', help='Dir path for model predictions.')
+    parser.add_argument('--pred', type=str, default='data/prediction', help='Prediction dir path.')
     parser.add_argument('--q', type=str, choices= ['all', 'common', 'controversial', 'test'], default='all', help='query set')
 
     args = parser.parse_args()

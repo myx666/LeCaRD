@@ -4,16 +4,28 @@
 ## Overview
 * [Background](#background)
 
+- [Dataset Structure](#dataset-structure)
+
 - [Install](#install)
 
 - [Usage](#usage)
+	- [query.json](#query.json)
+	- [candidates](#candidates)
+	- [golden_labels.json](#golden_labels.json)
 
+- [Evaluation](#evaluation)
+
+- [Experiment](#experiment)
+
+- [Authors](#authors)
+
+- [License](#license)
 
 ## Background
 
 The **Le**gal **Ca**se **R**etrieval **D**ataset (**LeCaRD**) contains 107 query cases and 10,700 candidate cases. Queries and results are adopted from criminal cases published by [the Supreme People’s Court of China](https://wenshu.court.gov.cn/). Relevance judgments criteria and annotation are all conducted by our legal expert team. For dataset evaluation, we implemented several existing retrieval models on LeCaRD as baselines. 
 
-## Project Structure
+## Dataset Structure
 
 `/LeCaRD/data` is the root directory of all LeCaRD data. The meanings of some main files (or directories) are introduced below: 
 
@@ -59,7 +71,7 @@ $ unzip data/candidates/candidates.zip -d data/candidates
 
 ## Usage
 
-For a quick start, you only need to get familiar with three files (also marked as [important] in [Project Structure](#project-structure)): `query.json`, `candidates`, and `golden_labels.json
+For a quick start, you only need to get familiar with three files (also marked as [important] in [Dataset Structure](#dataset-structure)): `query.json`, `candidates`, and `golden_labels.json
 `. 
 
 ### query.json
@@ -85,7 +97,29 @@ where `ajId` is the ID of the case, `ajName` is the case name, `ajjbqk` is the b
 
 where `key` is the query ID and `value` is a list of query's relevant case IDs. The number of relevant cases depends on its corresponding query. 
 
-## DataLoader
+## Evaluation
+
+`metrics.py` is an demo program of evaluating your own model predictions on LeCaRD. The usage of `metrics.py` is:
+
+```bash
+$ cd YOUR-LOCAL-PROJECT-PATH/LeCaRD
+$ python metrics.py --help
+
+usage: metrics.py [-h] [--m {NDCG,P,MAP}] [--label LABEL] [--pred PRED]
+                  [--q {all,common,controversial,test}]
+
+Help info:
+
+optional arguments:
+  -h, --help            show this help message and exit
+  --m {NDCG,P,MAP}      Metric.
+  --label LABEL         Label file path.
+  --pred PRED           Prediction dir path.
+  --q {all,common,controversial,test}
+                        query set
+```
+
+Your own model prediction file must has the same format as files in `/data/prediction`, where the files have query IDs as keys and their corresponding candidate ranking lists as values in a dictionary.
 
 ## Experiment
 
@@ -109,7 +143,7 @@ In terms of the pre-trained model, we adopt a criminal law-specific BERT publish
 | BERT    | **0.470**    | 0.430    | **0.568**    | 0.774    | 0.821    | **0.899**    |
 
 
-## Authors & Contact
+## Authors
 
 Yixiao Ma(myx666) mayx20@mails.tsinghua.edu.cn \
 Yunqiu Shao  shaoyunqiu14@gmail.com \
