@@ -11,7 +11,7 @@
 - [Usage](#usage)
 	- [query.json](#queryjson)
 	- [candidates](#candidates)
-	- [golden_labels.json](#goldenlabelsjson)
+	- [golden_labels.json](#golden_labelsjson)
 
 - [Evaluation](#evaluation)
 
@@ -85,7 +85,7 @@ where `path` is the path of query's full text in [the corpus](https://drive.goog
 
 `candidates` directory contains 107 subdirectories, each of which consists of 100 candidate documents. An example of a candidate documents is:
 
-> {"ajId":"dee49560-26b8-441b-81a0-6ea9696e92a8","ajName":"程某某走私、贩卖、运输、制造毒品一案","ajjbqk":" 公诉机关指控，2018年3月1日下午3时许，被告人程某某在本市东西湖区某某路某某工业园某某宾馆门口以人民币300元的价格向吸毒人员张某贩卖毒品甲基苯丙胺片剂5颗......","pjjg":" 一、被告人程某某犯贩卖毒品罪，判处有期徒刑十个月......","qw":"湖北省武汉市东西湖区人民法院 刑事判决书 （2018）鄂0112刑初298号 公诉机关武汉市东西湖区人民检察院。 被告人程某某......","writId": "0198ec7627d2c78f51e5e7e3862b6c19e42","writName":"程某某走私、贩卖、运输、制造毒品一审刑事判决书"}
+> {"ajId":"dee49560-26b8-441b-81a0-6ea9696e92a8","ajName":"程某某走私、贩卖、运输、制造毒品一案","ajjbqk":" 公诉机关指控，2018年3月1日下午3时许，被告人程某某在本市东西湖区某某路某某工业园某某宾馆门口以人民币300元的价格向吸毒人员张某贩卖毒品甲基苯丙胺片剂5颗......","pjjg":" 一、被告人程某某犯贩卖毒品罪，判处有期徒刑十个月......","qw":"湖北省武汉市东西湖区人民法院 刑事判决书 （2018）鄂0112刑初298号 公诉机关武汉市东西湖区人民检察院。 被告人程某某......","writId": "0198ec7627d2c78f51e5e7e3862b6c19e42", "writName": "程某某走私、贩卖、运输、制造毒品一审刑事判决书"}
 
 where `ajId` is the ID of the case, `ajName` is the case name, `ajjbqk` is the basic facts of the case, `pjjg` is the case judgment, `qw` is the full content, `writId` is the unique ID of this document, and `writName` is the document name.
 
