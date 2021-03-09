@@ -85,6 +85,30 @@ where `ajId` is the ID of the case, `ajName` is the case name, `ajjbqk` is the b
 
 where `key` is the query ID and `value` is a list of query's relevant case IDs. The number of relevant cases depends on its corresponding query. 
 
+## DataLoader
+
+## Experiment
+
+We implemented three traditional retrieval models (BM25, TF-IDF, and Language Models) and BERT as baselines for the evaluation on LeCaRD's top 30-relevant candiates.
+
+For traditional models, we first test their performances on the overall (common + controversial) query set. All traditional models are trained on [the corpus](https://drive.google.com/file/d/1vQdX1MegFVtmoh0XCd4mav5PBkep7q0h/view?usp=sharing). The results are:
+
+| **Model** | **P@5** | **P@10** | **MAP** | **NDCG@10** | **NDCG@20** | **NDCG@30** | 
+|:----------|:----------|:----------|:----------|:----------|:----------|:----------|
+| BM25   | 0.406    | 0.381    | 0.484    | 0.731    | 0.797    | 0.888    |
+| TF-IDF | 0.304    | 0.261    | 0.457    | **0.795**    | **0.832**    | 0.848    |
+| LMIR   | **0.436**    | **0.406**    | **0.495**    | 0.769    | 0.818    | **0.900**    |
+
+In terms of the pre-trained model, we adopt a criminal law-specific BERT published by [THUNLP](https://github.com/thunlp/openclap), which was pre-trained by 663 million Chinese criminal judgments. The fine-tuned BERT is evaluated on the overall query set using 5-fold cross-validation together with BM25, TF-IDF, and Language Models for comparison. The results are:
+
+| **Model** | **P@5** | **P@10** | **MAP** | **NDCG@10** | **NDCG@20** | **NDCG@30** |
+|:----------|:----------|:----------|:----------|:----------|:----------|:----------|
+| BM25    | 0.380    | 0.350    | 0.498    | 0.739    | 0.804    | 0.894    |
+| TF-IDF  | 0.270    | 0.215    | 0.459    | **0.817**    | **0.836**    | 0.853    |
+| LMIR    | 0.450    | **0.435**    | 0.512    | 0.769    | 0.807    | 0.896    |
+| BERT    | **0.470**    | 0.430    | **0.568**    | 0.774    | 0.821    | **0.899**    |
+
+
 ## Authors & Contact
 
 Yixiao Ma(myx666) mayx20@mails.tsinghua.edu.cn \
