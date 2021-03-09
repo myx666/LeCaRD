@@ -59,7 +59,7 @@ $ unzip data/candidates/candidates.zip -d data/candidates
 
 ## Usage
 
-For a quick start, you only need to get familiar with three files (also marked as [important] in [Project Structure](#project-structure)): `query.json`, `candidates`, and `golden_labels.json
+For a quick start, you only need to get familiar with three files (also marked as [important] in [Project Structure](project-structure)): `query.json`, `candidates`, and `golden_labels.json
 `. 
 
 ### query.json
@@ -81,20 +81,19 @@ where `ajId` is the ID of the case, `ajName` is the case name, `ajjbqk` is the b
 
 `golden_labels.json` is formulated in the following manner:
 
-> { ridx_1: [rel_1, rel_2, ...], ridx_2: [...], ... }
+> { ridx_1: [rel_11, rel_12, ...], ridx_2: [rel_21, rel_22, ...], ... }
 
 where `key` is the query ID and `value` is a list of query's relevant case IDs. The number of relevant cases depends on its corresponding query. 
 
 ## Authors & Contact
 
-Yixiao Ma(myx666)  mayx20@mails.tsinghua.edu.cn \
-Yunqiu Shao \
-Yueyue Wu \
-Yiqun Liu \
-Ruizhe Zhang \
-Min Zhang \
-Shaoping Ma
-
+Yixiao Ma(myx666) mayx20@mails.tsinghua.edu.cn \
+Yunqiu Shao  shaoyunqiu14@gmail.com \
+Yueyue Wu wuyueyue1600@gmail.com \
+Yiqun Liu yiqunliu@tsinghua.edu.cn \
+Ruizhe Zhang u@thusaac.com \
+Min Zhang z-m@tsinghua.edu.cn \
+Shaoping Ma msp@tsinghua.edu.cn 
 
 ## License
 
