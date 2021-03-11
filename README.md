@@ -32,7 +32,8 @@ The **Le**gal **Ca**se **R**etrieval **D**ataset (**LeCaRD**) contains 107 query
 ```
 data
 ├── candidates                       
-│   └── candidates.zip			// [important] candidate zipfile
+│   ├── candidates1.zip			// [important] candidate zipfile 1(for query 1-50)
+│   └── candidates2.zip			// [important] candidate zipfile 2(for query 51-107)
 ├── corpus
 │   ├── common_charge.json
 │   ├── controversial_charge.json
@@ -54,7 +55,7 @@ data
     ├── controversial_query.json
     └── query.json			// [important] overall query file
 
-6 directories, 16 files
+6 directories, 17 files
 ```
 
 ## Install
@@ -63,7 +64,8 @@ data
 
 ```bash
 $ cd YOUR-LOCAL-PROJECT-PATH/LeCaRD
-$ unzip data/candidates/candidates.zip -d data/candidates
+$ unzip data/candidates/candidates1.zip -d data/candidates
+$ unzip data/candidates/candidates2.zip -d data/candidates
 ```
 3. (Optional) All queries and candidates are selected from a corpus containing over 43,000 Chinese criminal documents. If you are interested, download the corpus zipfile through [this link](https://drive.google.com/file/d/1vQdX1MegFVtmoh0XCd4mav5PBkep7q0h/view?usp=sharing).
 

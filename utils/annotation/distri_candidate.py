@@ -17,7 +17,7 @@ from tqdm import tqdm
 parser = argparse.ArgumentParser(description="Help info.")
 parser.add_argument('--d', type=str, default='data/corpus/documents', help='Document dir path.')
 parser.add_argument('--q', type=str, default='data/prediction/combined_top100.json', help='Query path.') # query.json
-# parser.add_argument('--w', type=str, default='/work/mayixiao/similar_case/candidates', help='Write path.')
+parser.add_argument('--w', type=str, default='/work/mayixiao/similar_case/candidates2', help='Write path.')
 
 args = parser.parse_args()
 
@@ -38,9 +38,9 @@ args = parser.parse_args()
 #     # with open(os.path.join(WROOT,str(i+1),'q.txt'),'w') as f:
 #     #     f.write(temq)
 
-# root = '/work/yangjun/LAW/preprocess_new_data/feature_data'
-# with open('data/corpus/document_path.json', 'r') as f:
-#     jsfile = json.load(f)
+root = '/work/yangjun/LAW/preprocess_new_data/feature_data'
+with open('data/corpus/document_path.json', 'r') as f:
+    jsfile = json.load(f)
 
 paths = []
 for i in jsfile['single']:
@@ -57,7 +57,7 @@ print(len(paths))
 with open(args.q, 'r') as f:
     qs = json.load(f)
 
-for key in tqdm(list(qs.keys())):
+for key in tqdm(list(qs.keys())[50:]):
     keydir = os.path.join(args.w, key)
     if not os.path.exists(keydir):
         os.mkdir(keydir)
