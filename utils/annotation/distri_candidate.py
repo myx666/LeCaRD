@@ -38,9 +38,9 @@ args = parser.parse_args()
 #     # with open(os.path.join(WROOT,str(i+1),'q.txt'),'w') as f:
 #     #     f.write(temq)
 
-root = '/work/yangjun/LAW/preprocess_new_data/feature_data'
-with open('data/corpus/document_path.json', 'r') as f:
-    jsfile = json.load(f)
+# root = '/work/yangjun/LAW/preprocess_new_data/feature_data'
+# with open('data/corpus/document_path.json', 'r') as f:
+#     jsfile = json.load(f)
 
 paths = []
 for i in jsfile['single']:
@@ -51,6 +51,8 @@ for j in jsfile['retrial']:
         paths.append(i)
 
 print(len(paths))
+
+# print('/work/yangjun/LAW/preprocess_new_data/feature_data/'+paths[36655])
 
 with open(args.q, 'r') as f:
     qs = json.load(f)

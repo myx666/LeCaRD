@@ -28,7 +28,7 @@ def kappa(testData, k): #testData表示要计算的数据，k表示数据矩阵�
     cohens_coefficient = float((P0-Pe)/(1-Pe))
     return cohens_coefficient
 
-def fleiss_kappa(testData, N, k, n): #testData表示要计算的数据，（N,k）表示矩阵的形状，说明数据是N行j列的，一共有n个标注人员
+def fleiss_kappa(testData, N, k, n): 
     dataMat = np.mat(testData, float)
     oneMat = np.ones((k, 1))
     sum = 0.0

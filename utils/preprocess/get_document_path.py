@@ -15,7 +15,7 @@ from tqdm import tqdm
 
 parser = argparse.ArgumentParser(description="Help info.")
 parser.add_argument('--d', type=str, default='data/corpus/documents', help='Document dir path.')
-parser.add_argument('--w', type=str, default='data/corpus/document_path.json', help='Write path.')
+parser.add_argument('--w', type=str, default='data/corpus/document_path2.json', help='Write path.')
 
 args = parser.parse_args()
 
