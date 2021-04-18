@@ -135,7 +135,7 @@ For traditional models, we first test their performances on the overall (common 
 | TF-IDF | 0.304    | 0.261    | 0.457    | **0.795**    | **0.832**    | 0.848    |
 | LMIR   | **0.436**    | **0.406**    | **0.495**    | 0.769    | 0.818    | **0.900**    |
 
-In terms of the pre-trained model, we adopt a criminal law-specific BERT published by [THUNLP](https://github.com/thunlp/openclap), which was pre-trained by 663 million Chinese criminal judgments. The fine-tuned BERT is evaluated on the overall query set using 5-fold cross-validation together with BM25, TF-IDF, and Language Models for comparison. The results are:
+In terms of the pre-trained model, we adopt a criminal law-specific BERT published by [THUNLP](https://github.com/thunlp/openclap), which was pre-trained by 663 million Chinese criminal judgments. The fine-tuned BERT is evaluated on the overall query set with a test-train split together with BM25, TF-IDF, and Language Models for comparison. The results are:
 
 | **Model** | **P@5** | **P@10** | **MAP** | **NDCG@10** | **NDCG@20** | **NDCG@30** |
 |:----------|:----------|:----------|:----------|:----------|:----------|:----------|

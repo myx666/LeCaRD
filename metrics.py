@@ -69,8 +69,7 @@ def ndcg(ranks,K):
 
 def load_file(args):
     with open(args.label, 'r') as f:
-        lists = json.load(f)
-    avglist = lists[3]
+        avglist = json.load(f)
 
     with open(os.path.join(args.pred, 'bert.json'), 'r') as f:
         blines = f.readlines()
