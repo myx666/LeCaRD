@@ -45,7 +45,7 @@ def fleiss_kappa(testData, N, k, n):
     ysum = np.sum(dataMat, axis=0)
     for i in range(k):
         ysum[0, i] = (ysum[0, i]/sum)**2 # (1/k)**2
-    Pe = ysum*oneMat*0.0
+    Pe = ysum*oneMat*1.0
     ans = (P0-Pe)/(1-Pe)
     return ans[0, 0]
 
@@ -95,7 +95,7 @@ def load_file(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Help info:")
-    parser.add_argument('--m', type=str, choices= ['NDCG', 'P', 'MAP'], default='NDCG', help='Metric.')
+    parser.add_argument('--m', type=str, choices= ['NDCG', 'P', 'MAP', 'KAPPA'], default='NDCG', help='Metric.')
     parser.add_argument('--label', type=str, default='data/label/label_top30.json', help='Label file path.')
     parser.add_argument('--pred', type=str, default='data/prediction', help='Prediction dir path.')
     parser.add_argument('--q', type=str, choices= ['all', 'common', 'controversial', 'test'], default='all', help='query set')
@@ -164,19 +164,24 @@ if __name__ == "__main__":
             map_list.append(smap/len(keys))
         print(map_list)
     
-    # if MODE == 'KAPPA':
-    #     dataArr = []
-    #     for i in range(100):
-    #         rel = 0
-    #         for j in range(30):
-    #             tem = 0
-    #             for k in range(3):
-    #                 tem += lists[k][i][j]
-    #             if tem <= 4:
-    #                 rel += 1
-    #         dataArr.append(rel)
-    #     # print(len([i for i in dataArr if i==0 and i < 5]))
-    #     print(fleiss_kappa(dataArr, 3000, 4, 3))
+    elif args.m == 'KAPPA':
+        lists = json.load(open('/work/mayixiao/similar_case/LeCaRD/private/data/label_top30.json', 'r'))
+        dataArr = []
+
+        # for i in range(100):
+        for i in lists[0].keys():
+            # rel = 0
+            for j in range(30):
+                # tem = 0
+                tem = [0,0,0,0]
+                for k in range(3):
+                    # tem += lists[k][i][j]
+                    tem[int(lists[k][i][j])-1] += 1
+                # if tem <= 4:
+                #     rel += 1
+                dataArr.append(tem)
+        # print(len([i for i in dataArr if i==0 and i < 5]))
+        print(fleiss_kappa(dataArr, 3000, 4, 3))
 
     # elif MODE == 'F1':
     #     topK = 15
