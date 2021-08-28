@@ -14,12 +14,15 @@ import argparse
 from tqdm import tqdm
 # import thulac
 import jieba
+from sys import path
+path.append("/work/mayixiao/www22")
+from pre_ajjbqk import process_ajjbqk
 
 parser = argparse.ArgumentParser(description="Help info.")
-parser.add_argument('--d', type=str, default='data/corpus/documents', help='Document dir path.')
-parser.add_argument('--dpath', type=str, default='data/corpus/document_path.json', help='Document_path file path.')
-parser.add_argument('--s', type=str, default='data/others/stopword.txt', help='Stopword path.')
-parser.add_argument('--w', type=str, default='data/others/corpus_jieba.json', help='Write path.')
+parser.add_argument('--d', type=str, default='/work/yangjun/LAW/preprocess_new_data/feature_data', help='Document dir path.')
+parser.add_argument('--dpath', type=str, default='/work/mayixiao/similar_case/LeCaRD/LeCaRD_github/data/corpus/document_path.json', help='Document_path file path.')
+parser.add_argument('--s', type=str, default='/work/mayixiao/similar_case/LeCaRD/LeCaRD_github/data/others/stopword.txt', help='Stopword path.')
+parser.add_argument('--w', type=str, default='/work/mayixiao/similar_case/202006/corpus_jieba_short.json', help='Write path.')
 
 args = parser.parse_args()
 
@@ -40,7 +43,9 @@ for path in tqdm(jspath['single'][:]):
     with open(fullpath, 'r') as g:
         file_ = json.load(g)
     # if 'ajjbqk' in file_:
-    a = jieba.cut(file_['ajjbqk'], cut_all=False)
+    processed_file = process_ajjbqk(file_['ajjbqk'])
+    a = jieba.cut(processed_file, cut_all=False)
+    # a = jieba.cut(file_['ajjbqk'], cut_all=False)
     tem = " ".join(a).split()
     # tem = seg.cut(file_['ajjbqk'], text = True).split()
     corpus.append([i for i in tem if not i in stopwords])

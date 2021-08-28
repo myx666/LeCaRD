@@ -51,11 +51,9 @@ data
 │   ├── lm_top100.json
 │   └── tfidf_top100.json
 └── query
-    ├── common_query.json
-    ├── controversial_query.json
     └── query.json			// [important] overall query file
 
-6 directories, 17 files
+6 directories, 15 files
 ```
 
 ## Install
