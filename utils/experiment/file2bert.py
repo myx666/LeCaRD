@@ -18,10 +18,10 @@ from pre_ajjbqk import process_ajjbqk
 
 parser = argparse.ArgumentParser(description="Help info.")
 parser.add_argument('--l', type=str, default='/work/mayixiao/similar_case/202006/data/label/label_top30_dict_2.json', help='Label file path.')
-parser.add_argument('--q', type=str, default='/work/mayixiao/similar_case/202006/data/query/query2_big.json', help='Query file path.')
+parser.add_argument('--q', type=str, default='/work/mayixiao/similar_case/202006/data/query/query2_final.json', help='Query file path.')
 parser.add_argument('--d', type=str, default='/work/mayixiao/similar_case/202006/data/candidates_2', help='Document dir path.')
 parser.add_argument('--short', type=bool, default=False, help='if pre ajjbqk.')
-parser.add_argument('--w', type=str, default='/work/mayixiao/www22/test_2', help='Write file path.')
+parser.add_argument('--w', type=str, default='/work/mayixiao/www22/train_2', help='Write file path.')
 
 args = parser.parse_args()
 
@@ -81,7 +81,7 @@ for line in tqdm(lines):
         w_list.append(tem)
         if tem['label'] == 1:
             pos_num += 1
-        max_len = max(max_len, len(tem['text_a']) + len(tem['text_a']))
+        max_len = max(max_len, len(tem['text_a']) + len(tem['text_b']))
     if pos_num > 15:
         delta = 2*pos_num - 30
         files = os.listdir(os.path.join(args.d, qid))
@@ -89,7 +89,7 @@ for line in tqdm(lines):
         for cid in cids:
             tem = make_data(dic, qid, cid)
             w_list.append(tem)
-            max_len = max(max_len, len(tem['text_a']) + len(tem['text_a']))
+            max_len = max(max_len, len(tem['text_a']) + len(tem['text_b']))
 
 if args.short:
     tail = '_short.json'

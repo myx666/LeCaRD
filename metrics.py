@@ -49,19 +49,37 @@ def fleiss_kappa(testData, N, k, n):
     ans = (P0-Pe)/(1-Pe)
     return ans[0, 0]
 
-def ndcg(ranks,K):
+# def ndcg(ranks,K):
+#     dcg_value = 0.
+#     idcg_value = 0.
+#     log_ki = []
+
+#     sranks = sorted(ranks, reverse=True)
+
+#     for i in range(0,K):
+#         logi = math.log(i+2,2)
+#         dcg_value += ranks[i] / logi
+#         idcg_value += sranks[i] / logi
+
+#     '''print log_ki'''
+#     # print ("DCG value is " + str(dcg_value))
+#     # print ("iDCG value is " + str(idcg_value))
+
+#     return dcg_value/idcg_value
+
+def ndcg(ranks, gt_ranks, K):
     dcg_value = 0.
     idcg_value = 0.
-    log_ki = []
+    # log_ki = []
 
-    sranks = sorted(ranks, reverse=True)
+    sranks = sorted(gt_ranks, reverse=True)
 
     for i in range(0,K):
         logi = math.log(i+2,2)
         dcg_value += ranks[i] / logi
         idcg_value += sranks[i] / logi
 
-    '''print log_ki'''
+    # '''print log_ki'''
     # print ("DCG value is " + str(dcg_value))
     # print ("iDCG value is " + str(idcg_value))
 
@@ -129,12 +147,15 @@ if __name__ == "__main__":
             for redic in dics:
                 sndcg = 0.0
                 for key in keys:
-                    # rawranks = [4 - avglist[key][list(combdic[key][:30]).index(i)] for i in redic[key] if i in list(combdic[key][:30])]
-                    rawranks = [avglist[key][str(i)] for i in redic[key] if i in list(combdic[key][:30])]
-                    # print(rawranks) 
+                    rawranks = []
+                    for i in redic[key]:
+                        if str(i) in avglist[key]:
+                            rawranks.append(avglist[key][str(i)])
+                        else:
+                            rawranks.append(0)
                     ranks = rawranks + [0]*(30-len(rawranks))
                     if sum(ranks) != 0:
-                        sndcg += ndcg(ranks,topK)
+                        sndcg += ndcg(ranks, list(avglist[key].values()), topK)
                 temK_list.append(sndcg/len(keys))
             ndcg_list.append(temK_list)
         print(ndcg_list)
