@@ -91,10 +91,10 @@ def load_file(args):
         tdic[key].reverse()
         bdic[key].reverse()
 
-    with open('/work/mayixiao/lawformer/lawformer_top30.json', 'r') as f:
-        lawformer_dic = json.load(f)
+    # with open('/work/mayixiao/lawformer/lawformer_top30.json', 'r') as f:
+    #     lawformer_dic = json.load(f)
     
-    return avglist, bertdics, combdic, tdic, ldic, bdic, lawformer_dic
+    return avglist, bertdics, combdic, tdic, ldic, bdic#, lawformer_dic
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Help info:")
@@ -105,7 +105,7 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    avglist, bertdics, combdic, tdic, ldic, bdic, lawformer_dic = load_file(args)
+    avglist, bertdics, combdic, tdic, ldic, bdic = load_file(args) #, lawformer_dic
 
     dics = [bdic, tdic, ldic]
     if args.q == 'all':
@@ -117,8 +117,8 @@ if __name__ == "__main__":
     elif args.q == 'test':
         keys = [i for i in list(combdic.keys())[:100] if list(combdic.keys())[:100].index(i) % 5 == 0]
         # dics = [bdic, tdic, ldic, bertdics[1]]
-        # dics = [bertdics[1]]
-        dics = [lawformer_dic]
+        dics = [bertdics[1]]
+        # dics = [lawformer_dic]
     
     if args.m == 'NDCG':
         topK_list = [10, 20, 30]
@@ -178,18 +178,14 @@ if __name__ == "__main__":
 
         # for i in range(100):
         for i in lists[0].keys():
-            # rel = 0
             for j in range(30):
-                # tem = 0
                 tem = [0,0,0,0]
                 for k in range(3):
                     # tem += lists[k][i][j]
                     tem[int(lists[k][i][j])-1] += 1
-                # if tem <= 4:
-                #     rel += 1
                 dataArr.append(tem)
         # print(len([i for i in dataArr if i==0 and i < 5]))
-        print(fleiss_kappa(dataArr, 3000, 4, 3))
+        print(fleiss_kappa(dataArr, 30*len(lists[0]), 4, 3))
 
     # elif MODE == 'F1':
     #     topK = 15
