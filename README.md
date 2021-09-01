@@ -17,6 +17,8 @@
 
 - [Experiment](#experiment)
 
+- [Citation](#citation)
+
 - [Authors](#authors)
 
 - [License](#license)
@@ -142,6 +144,17 @@ In terms of the pre-trained model, we adopt a criminal law-specific BERT publish
 | LMIR    | 0.450    | **0.435**    | 0.512    | 0.769    | 0.807    | 0.896    |
 | BERT    | **0.470**    | 0.430    | **0.568**    | 0.774    | 0.821    | **0.899**    |
 
+## Citation
+```
+@article{ma2021lecard,
+  title={LeCaRD: A Legal Case Retrieval Dataset for Chinese Law System},
+  author={Ma, Yixiao and Shao, Yunqiu and Wu, Yueyue and Liu, Yiqun and Zhang, Ruizhe and Zhang, Min and Ma, Shaoping},
+  journal={Information Retrieval (IR)},
+  volume={2},
+  pages={22},
+  year={2021}
+}
+```
 
 ## Authors
 
