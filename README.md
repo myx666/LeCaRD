@@ -71,7 +71,7 @@ $ unzip data/candidates/candidates2.zip -d data/candidates
 
 4. (Optional) Corpus_jieba.json used in our paper: [this link](https://drive.google.com/file/d/1vQdX1MegFVtmoh0XCd4mav5PBkep7q0h/view?usp=sharing)
 
-4. Get started!
+5. Get started!
 
 ## Usage
 
