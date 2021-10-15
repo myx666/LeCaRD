@@ -69,6 +69,8 @@ $ unzip data/candidates/candidates2.zip -d data/candidates
 ```
 3. (Optional) All queries and candidates are selected from a corpus containing over 43,000 Chinese criminal documents. If you are interested, download the corpus zipfile through [this link](https://drive.google.com/file/d/1vQdX1MegFVtmoh0XCd4mav5PBkep7q0h/view?usp=sharing).
 
+4. (Optional) Corpus_jieba.json used in our paper: [this link](https://drive.google.com/file/d/1vQdX1MegFVtmoh0XCd4mav5PBkep7q0h/view?usp=sharing)
+
 4. Get started!
 
 ## Usage
