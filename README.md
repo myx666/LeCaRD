@@ -41,8 +41,7 @@ data
 │   ├── controversial_charge.json
 │   └── document_path.json		// corpus document path file
 ├── label
-│   ├── golden_labels.json		// [important] golden labels for candidates
-│   └── label_top30.json		// labels of top 30-relevant candidates
+│   └── label_top30.json		// [important] labels of top 30-relevant candidates, the rest unlabelled candidates are irrelevant (or label=0)
 ├── others
 │   ├── criminal charges.txt		// list of all Chinese criminal charges
 │   └── stopword.txt
@@ -93,13 +92,13 @@ where `path` is the path of query's full text in [the corpus](https://drive.goog
 
 where `ajId` is the ID of the case, `ajName` is the case name, `ajjbqk` is the basic facts of the case, `pjjg` is the case judgment, `qw` is the full content, `writId` is the unique ID of this document, and `writName` is the document name.
 
-### golden_labels.json
+<!-- ### golden_labels.json
 
 `golden_labels.json` is formulated in the following manner:
 
 > { ridx_1: [rel_11, rel_12, ...], ridx_2: [rel_21, rel_22, ...], ... }
 
-where `key` is the query ID and `value` is a list of query's relevant case IDs. The number of relevant cases depends on its corresponding query. 
+where `key` is the query ID and `value` is a list of query's relevant case IDs. The number of relevant cases depends on its corresponding query.  -->
 
 ## Evaluation
 

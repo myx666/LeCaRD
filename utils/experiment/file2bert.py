@@ -119,18 +119,19 @@ max_len = 0
 for line in tqdm(lines):
     dic = eval(line)
     qid = str(dic['ridx'])
-    pos_num = 0
-    # l0_num = 0
+    # pos_num = 0
+ 
     for cid in labels[qid]:
         tem = make_data(dic, qid, cid, 2)
         w_list.append(tem)
-        if tem['label'] == 1:
-            pos_num += 1
-        # elif tem['label'] == 0:
-        #     l0_num += 1
+        # if tem['label'] == 1:
+            # pos_num += 1
+        
         max_len = max(max_len, len(tem['text_a']) + len(tem['text_b']))
-    if args.mode[:4] != 'test' and pos_num > 15:
-        delta = 2*pos_num - 30
+    # if args.mode[:4] != 'test' and pos_num > 15:
+        # delta = 2*pos_num - 30
+    if 1: # for cut off
+        delta = 100 - len(list(labels[qid].keys())) # for cut off
         files = os.listdir(os.path.join(args.d, qid))
         cids = [file_.split('.')[0] for file_ in files if file_.split('.')[0] not in labels[qid]][:delta]
         for cid in cids:
