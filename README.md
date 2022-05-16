@@ -147,12 +147,11 @@ In terms of the pre-trained model, we adopt a criminal law-specific BERT publish
 
 ## Citation
 ```
-@article{ma2021lecard,
+@inproceedings{ma2021lecard,
   title={LeCaRD: A Legal Case Retrieval Dataset for Chinese Law System},
   author={Ma, Yixiao and Shao, Yunqiu and Wu, Yueyue and Liu, Yiqun and Zhang, Ruizhe and Zhang, Min and Ma, Shaoping},
-  journal={Information Retrieval (IR)},
-  volume={2},
-  pages={22},
+  booktitle={Proceedings of the 44th International ACM SIGIR Conference on Research and Development in Information Retrieval},
+  pages={2342--2348},
   year={2021}
 }
 ```
