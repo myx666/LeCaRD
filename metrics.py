@@ -114,8 +114,7 @@ if __name__ == "__main__":
     elif args.q == 'controversial':
         keys = list(label_dic.keys())[77:]
     elif args.q == 'test':
-        # combdic = json.load(open('/work/mayixiao/similar_case/LeCaRD/LeCaRD_github/data/prediction/combined_top100.json','r'))
-        keys = [i for i in list(label_dic.keys()) if list(label_dic.keys()).index(i) % 5 == 0]
+        keys = [i for i in list(label_dic.keys())[:100] if list(label_dic.keys()).index(i) % 5 == 0]
         # keys = [i for i in list(combdic.keys()) if list(combdic.keys()).index(i) % 5 == 0]
         # keys = label_dic.keys()
     elif args.q == 'test_2':
@@ -162,7 +161,8 @@ if __name__ == "__main__":
         for dic in dics:
             smap = 0.0
             for key in keys:
-                ranks = [i for i in dic[key] if str(i) in list(label_dic[key][:30])] 
+                
+                ranks = [i for i in dic[key] if str(i) in label_dic[key]] 
                 rels = [ranks.index(i) for i in ranks if label_dic[key][str(i)] == 3]
                 tem_map = 0.0
                 for rel_rank in rels:
